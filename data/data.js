@@ -18,7 +18,6 @@ function formatJSON(json){
 // 起動時の処理
 window.addEventListener("load", ()=>{
 
-	// 12星座情報を取得して表示
 	fetch(url)
 		.then( response => response.json())
 		.then( data => formatJSON(data));
