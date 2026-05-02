@@ -110,7 +110,10 @@ main{
     min-width: 23px;
     text-align: center;
     white-space: nowrap;
+    display: flex;
+    flex-flow: column;
 }
+.c-b{font-size: 80%;opacity: .5;}
 .c-1{}
 
 
@@ -126,11 +129,16 @@ main{
 
 .p-num__box li{
     width: 100%;
+    /* max-width: calc((100% - 18px) / 3); */
     max-width: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
+}
+.p-num__box["data-num=37"] li,
+.p-num__box["data-num=43"] li{
+    max-width: 30px;
 }
 
 .c-btn{

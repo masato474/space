@@ -4,7 +4,14 @@
 
 const json_path = ["data.json","data6.json","data7.json"];	// 読み込むJSONファイル
 const result_box = document.querySelector("#js-result");
-let queries = 3;
+let queries = 9;
+const back_num = function(i){
+	// 0>5 1>6 2>7 3>8 4>9
+	i_c = Number(i);
+	console.log(i_c);
+if(i_c < 5){i_c = i_c+5;}else{i_c = i_c-5}
+return i_c;
+}
 const formatJSON = function(json){
 	// JSONファイルを整形して表示
 	let html = "";
@@ -21,7 +28,9 @@ const formatJSON = function(json){
 				// console.log(i_res.slice(i,i+1));
 				// i_ = i_res.slice(i,i+1);
 				i_ = i_res[i];
-				item_ += `<span class="c-n c-${i_}">${i_}</span>`;
+				i_c = 0;
+				i_c = back_num(i_);
+				item_ += `<span class="c-n c-${i_}">${i_}<span class="c-b">${i_c}</span></span>`;
 			};
 		// }
 
@@ -56,14 +65,17 @@ const formatJSON = function(json){
 // }
 
 
-const num_list = function(st = "3"){
-	let status = st;
-	if(queries && queries !== "" && queries == 3||queries == 37 ||queries == 43) st = queries;
+const num_list = function(st = "9"){
+	// let status = st;
+	if(queries && queries !== "" && queries == 9||queries == 37 ||queries == 43) st = queries;
 	// console.log(st);
 	const num = document.querySelector('#js-num_list');
+	num.setAttribute("data-num",queries);
 	const set_list = st;
 	let list_html = '';
-	for(let i = 1;i<= set_list;i++){
+	let ii = 1;
+	if(queries == "9") ii = 0;
+	for(let i = ii;i<= set_list;i++){
 		list_html += `<li class="c-btn c-${i}" data-num="${i}">${i}</li>`;
 	}
 	num.innerHTML = list_html;
@@ -87,8 +99,7 @@ const btn_click = function(btn_class = false){
 			let data_num = "";
 			if(e.dataset.num) data_num = e.dataset.num;
 			if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
-			e.classList.toggle("act");
-
+			
 
 			//下部ボタン
 			if(e.closest("#js-num_list")) {
@@ -99,6 +110,7 @@ const btn_click = function(btn_class = false){
 			//navボタン
 			if(e.closest("#nav")) {
 				if(e.dataset.q) queries = e.dataset.q;
+				if(document.querySelectorAll("#nav .act").length>=1) document.querySelector("#nav .act").classList.remove("act");
 				// console.log(queries);
 				num_list(queries);
 				reload_json();
@@ -106,7 +118,7 @@ const btn_click = function(btn_class = false){
 				// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
 			}
 			
-			//
+			e.classList.toggle("act");
 			
 		});
 	});
