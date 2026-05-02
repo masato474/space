@@ -1,5 +1,6 @@
 :root {
   --active: .4;
+  --spacer: 16px;
 }
 
 *{
@@ -16,7 +17,8 @@ html{
     font-size: 14px;
 }
 main{
-	padding:20px;
+	padding: var(--spacer);
+	padding-top: 60px;
 }
 
 /**/
@@ -118,24 +120,17 @@ main{
     bottom: 0;
     z-index: 1;
     width: 100%;
-    padding: 0 20px 30px;
+    padding: 0 var(--spacer) 30px;
 }
-.p-num__box{
-margin: 0 auto;
-padding:0;
-display: flex;
-    gap: 8px;
-    list-style: none;
-    align-items: center;
-    width: 100%;
-    justify-content: space-evenly;
-}
+.p-num__box{margin: 0 auto;padding:0;display: flex;gap: 4px 8px;list-style: none;align-items: center;width: 100%;justify-content: flex-start;flex-flow: wrap;}
 
 .p-num__box li{
     width: 100%;
+    max-width: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: bold;
 }
 
 .c-btn{
@@ -145,7 +140,48 @@ display: flex;
     line-height: 1;
     border-radius: 3px;
     cursor: pointer;
+    text-decoration: none;
 }
 .act{
     opacity: var(--active);
 }
+
+
+/**/
+.c-menu{
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    background: #aaa;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+.c-menu:before{
+    content:"▼";
+}
+.act .c-menu:before{
+    content:"▲";
+}
+.l-nav{padding: var(--spacer);position: absolute;}
+.l-nav__list{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 8px;
+}
+.l-nav:not(.act) .l-nav__list{
+	display:none;
+}
+.l-nav.act{
+	opacity:inherit;
+	background: rgba(255,255,255,0.9);
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.l-nav__list li{}
+.l-nav__list a{}
