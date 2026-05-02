@@ -4,8 +4,8 @@
 
 const json_path = ["data.json","data6.json","data7.json"];	// 読み込むJSONファイル
 const result_box = document.querySelector("#js-result");
+let queries = 3;
 const formatJSON = function(json){
-
 	// JSONファイルを整形して表示
 	let html = "";
 	for(let i of json.data){
@@ -37,30 +37,28 @@ const formatJSON = function(json){
 	initialize();
 }
 
-let queries = {};
-const getUrlQueries = function() {
-  let queryStr = window.location.search.slice(1);  // 文頭?を除外
-    //   queries = {};
+// const getUrlQueries = function() {
+//   let queryStr = window.location.search.slice(1);  // 文頭?を除外
       
   // クエリがない場合は空のオブジェクトを返す
-  if (!queryStr) {
-    return queries;
-  }
+//   if (!queryStr) {
+    // return queries;
+//   }
   
   // クエリ文字列を & で分割して処理
-  queryStr.split('&').forEach(function(queryStr) {
+//   queryStr.split('&').forEach(function(queryStr) {
     // = で分割してkey,valueをオブジェクトに格納
-    var queryArr = queryStr.split('=');
-    queries[queryArr[0]] = queryArr[1];
-  });
-  
-  return queries;
-}
+    // var queryArr = queryStr.split('=');
+    // queries[queryArr[0]] = queryArr[1];
+//   });
+//   document.querySelectorAll("#js-menu .l-nav__list .c-btn");
+//   return queries;
+// }
 
 
 const num_list = function(st = "3"){
 	let status = st;
-	if(queries["q"] && queries["q"] !== "" && queries["q"] == 3||queries["q"] == 37 ||queries["q"] == 43) st = queries["q"];
+	if(queries && queries !== "" && queries == 3||queries == 37 ||queries == 43) st = queries;
 	// console.log(st);
 	const num = document.querySelector('#js-num_list');
 	const set_list = st;
@@ -98,6 +96,16 @@ const btn_click = function(btn_class = false){
 				if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
 			}
 
+			//navボタン
+			if(e.closest("#nav")) {
+				if(e.dataset.q) queries = e.dataset.q;
+				// console.log(queries);
+				num_list(queries);
+				reload_json();
+				// queries
+				// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
+			}
+			
 			//
 			
 		});
@@ -105,21 +113,30 @@ const btn_click = function(btn_class = false){
 
 }
 
-
 const initialize = function(){
 	btn_click(".p-num__box > .c-btn");
+	btn_click(".l-nav__list .c-btn");
 }
 
-// 起動時の処理
-window.addEventListener("load", ()=>{
-	getUrlQueries();
-	num_list();
-	console.log(queries);
-	// if(queries["q"] == 3){
-		// 
-	// }
-	fetch(json_path[0])
+const reload_json = function(){
+	if(queries == 37){
+		json = json_path[2];
+	}else if(queries == 43){
+		json = json_path[1];
+	}else {
+		json = json_path[0];
+	}
+	console.log(json);
+	fetch(json)
 		.then( response => response.json())
 		.then( data => formatJSON(data));
+}
+// 起動時の処理
+window.addEventListener("load", ()=>{
+	// getUrlQueries();
+	num_list();
+	// console.log(queries);
+
+	reload_json();
 
 });
