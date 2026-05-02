@@ -1,3 +1,7 @@
+:root {
+  --active: .4;
+}
+
 *{
     box-sizing: border-box;
 }
@@ -35,6 +39,77 @@ main{
 	padding:0;
 	margin: 0;
 }
+.p-result__item{}
+.p-result__id{
+    min-width: 40px;
+    color: #aaa;
+}
+.p-result__number{
+    display: flex;
+    gap: 2px;
+    align-items: center;
+    justify-content: center;
+}
+.c-act .p-result__number .c-n{
+    opacity: var(--active);
+}
+.c-act.c-1 .p-result__number .c-1,
+.c-act.c-2 .p-result__number .c-2,
+.c-act.c-3 .p-result__number .c-3,
+.c-act.c-4 .p-result__number .c-4,
+.c-act.c-5 .p-result__number .c-5,
+.c-act.c-6 .p-result__number .c-6,
+.c-act.c-7 .p-result__number .c-7,
+.c-act.c-8 .p-result__number .c-8,
+.c-act.c-9 .p-result__number .c-9,
+.c-act.c-10 .p-result__number .c-10,
+.c-act.c-11 .p-result__number .c-11,
+.c-act.c-12 .p-result__number .c-12,
+.c-act.c-13 .p-result__number .c-13,
+.c-act.c-14 .p-result__number .c-14,
+.c-act.c-15 .p-result__number .c-15,
+.c-act.c-16 .p-result__number .c-16,
+.c-act.c-17 .p-result__number .c-17,
+.c-act.c-18 .p-result__number .c-18,
+.c-act.c-19 .p-result__number .c-19,
+.c-act.c-20 .p-result__number .c-20,
+.c-act.c-21 .p-result__number .c-21,
+.c-act.c-22 .p-result__number .c-22,
+.c-act.c-23 .p-result__number .c-23,
+.c-act.c-24 .p-result__number .c-24,
+.c-act.c-25 .p-result__number .c-25,
+.c-act.c-26 .p-result__number .c-26,
+.c-act.c-27 .p-result__number .c-27,
+.c-act.c-28 .p-result__number .c-28,
+.c-act.c-29 .p-result__number .c-29,
+.c-act.c-30 .p-result__number .c-30,
+.c-act.c-31 .p-result__number .c-31,
+.c-act.c-32 .p-result__number .c-32,
+.c-act.c-33 .p-result__number .c-33,
+.c-act.c-34 .p-result__number .c-34,
+.c-act.c-35 .p-result__number .c-35,
+.c-act.c-36 .p-result__number .c-36,
+.c-act.c-37 .p-result__number .c-37,
+.c-act.c-38 .p-result__number .c-38,
+.c-act.c-39 .p-result__number .c-39,
+.c-act.c-40 .p-result__number .c-40,
+.c-act.c-41 .p-result__number .c-41,
+.c-act.c-42 .p-result__number .c-42,
+.c-act.c-43 .p-result__number .c-43{
+    opacity: initial;
+}
+
+.p-result__memo{margin: 0 0 0 auto;}
+.c-n{
+    background: #ddd;
+    padding: 3px;
+    line-height: 1;
+    border-radius: 50%;
+    min-width: 23px;
+    text-align: center;
+    white-space: nowrap;
+}
+.c-1{}
 
 
 /**/
@@ -70,4 +145,7 @@ display: flex;
     line-height: 1;
     border-radius: 3px;
     cursor: pointer;
+}
+.act{
+    opacity: var(--active);
 }
