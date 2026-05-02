@@ -157,14 +157,15 @@ main{
 
 /**/
 .c-menu{
-    width: 30px;
-    height: 30px;
+    width: 24px;
+    height: 24px;
     display: inline-flex;
     background: #aaa;
     border-radius: 50%;
     align-items: center;
     justify-content: center;
     color: #fff;
+    font-size: 80%;
 }
 .c-menu:before{
     content:"▼";

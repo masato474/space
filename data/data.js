@@ -5,11 +5,12 @@
 const json_path = ["data.json","data6.json","data7.json"];	// 読み込むJSONファイル
 const result_box = document.querySelector("#js-result");
 let queries = 9;
-const back_num = function(i){
+const back_num = function(i,queries = 9){
 	// 0>5 1>6 2>7 3>8 4>9
 	i_c = Number(i);
-	console.log(i_c);
-if(i_c < 5){i_c = i_c+5;}else{i_c = i_c-5}
+	// console.log(i_c);
+	if(i_c < 5){i_c = i_c+5;}else{i_c = i_c-5}
+
 return i_c;
 }
 const formatJSON = function(json){
