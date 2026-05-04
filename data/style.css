@@ -16,6 +16,16 @@ body{
 html{
     font-size: 14px;
 }
+
+img{}
+
+input,
+textarea{
+	width:auto;
+	border:1px solid #aaa;
+	padding:3px;
+}
+
 main{
 	padding: var(--spacer);
 	padding-top: 60px;
@@ -104,9 +114,9 @@ main{
 .p-result__memo{margin: 0 0 0 auto;}
 .c-n{
     background: #ddd;
-    padding: 3px;
+    padding: 3px 6px;
     line-height: 1;
-    border-radius: 50%;
+    border-radius: 8px;
     min-width: 23px;
     text-align: center;
     white-space: nowrap;
@@ -124,17 +134,25 @@ main{
     z-index: 1;
     width: 100%;
     padding: 0 var(--spacer) 30px;
+    display: flex;
+    align-items: self-start;
+    gap: 8px;
 }
-.p-num__box{margin: 0 auto;padding:0;display: flex;gap: 4px 8px;list-style: none;align-items: center;width: 100%;justify-content: flex-start;flex-flow: wrap;}
-
+.p-num__box{margin: 0 auto;padding:0;display: flex;gap: 4px 8px;list-style: none;/* align-items: center; */width: 100%;justify-content: flex-start;flex-flow: wrap;}
+.c-rBox{
+	font-size: 80%;
+	opacity: .7;
+}
 .p-num__box li{
     width: 100%;
     /* max-width: calc((100% - 18px) / 3); */
-    max-width: 30px;
+    max-width: 26px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     font-weight: bold;
+    flex-flow: column;
+    /* height: 100%; */
 }
 .p-num__box["data-num=37"] li,
 .p-num__box["data-num=43"] li{
@@ -166,6 +184,7 @@ main{
     justify-content: center;
     color: #fff;
     font-size: 80%;
+    min-width: 24px;
 }
 .c-menu:before{
     content:"▼";
@@ -173,7 +192,11 @@ main{
 .act .c-menu:before{
     content:"▲";
 }
-.l-nav{padding: var(--spacer);position: absolute;}
+.c-menu__limit{}
+.c-menu__limit input{
+    width: 80px;
+}
+.l-nav{padding: var(--spacer);position: absolute;width: 100%;display: flex;}
 .l-nav__list{
     list-style: none;
     padding: 0;
