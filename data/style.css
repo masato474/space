@@ -138,15 +138,19 @@ main{
     align-items: self-start;
     gap: 8px;
 }
-.p-num__box{margin: 0 auto;padding:0;display: flex;gap: 4px 8px;list-style: none;/* align-items: center; */width: 100%;justify-content: flex-start;flex-flow: wrap;}
+.p-num__box{margin: 0 auto;padding:0;display: flex;gap: 4px 5px;list-style: none;/* align-items: center; */width: 100%;justify-content: flex-start;flex-flow: wrap;}
 .c-rBox{
 	font-size: 80%;
 	opacity: .7;
+	display: flex;
+	gap: 3px;
+	justify-content: space-evenly;
+	width: 100%;
 }
 .p-num__box li{
     width: 100%;
     /* max-width: calc((100% - 18px) / 3); */
-    max-width: 26px;
+    max-width: 29px;
     display: flex;
     align-items: center;
     justify-content: flex-start;

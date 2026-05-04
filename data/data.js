@@ -155,10 +155,14 @@ const initialize = function(){
 const f_num_count = function(){
 	// console.log(resB_num);
 	function set_num(da,st = false){
+		// console.log(da);
 		for(var key in da) {
 			// console.log(`${key}:${da[key]}`);
+			set_key = key.replace("n","");
 			if(st == false){
-				if(document.querySelector(`.c-${da[key]}`)) document.querySelector(`.c-${da[key]} .c-r`).textContent = da[key];
+				if(document.querySelector(`.c-${set_key}`)) document.querySelector(`.c-${set_key} .c-r`).textContent = da[key];
+			}else{
+				if(document.querySelector(`.c-${set_key}`)) document.querySelector(`.c-${set_key} .c-rb`).textContent = da[key];
 			}
 		};
 	}
