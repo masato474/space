@@ -2,7 +2,8 @@
  * data.js
  */
 
-const json_path = ["data.json","data6.json","data7.json"];	// 読み込むJSONファイル
+// const json_path = ["data.json","data6.json","data7.json"];	// 読み込むJSONファイル
+const json_path = ["n3.csv","l6.csv","l7.csv"];	// 読み込むJSONファイル
 const result_box = document.querySelector("#js-result");
 let queries = 9;
 const back_num = function(i,queries = 9){
@@ -15,6 +16,76 @@ const back_num = function(i,queries = 9){
 }
 let res_num = {};
 let resB_num = {};
+
+function getCSV(path){
+    var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
+    req.open("get", path, true); // アクセスするファイルを指定
+    req.send(null); // HTTPリクエストの発行
+	// console.log(path);
+    // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
+    req.onload = function(){
+	convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
+    }
+}
+
+// 読み込んだCSVデータを二次元配列に変換する関数convertCSVtoArray()の定義
+function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列として渡される
+	
+    // var result = []; // 最終的な二次元配列を入れるための配列
+    var result = str.split("\n"); // 改行を区切り文字として行を要素とした配列を生成
+
+    // 各行ごとにカンマで区切った文字列を要素とした二次元配列を生成
+    // for(var i=0;i<tmp.length;++i){
+        // result[i] = tmp[i].split(',');
+    // }
+
+    // alert(result[1][2]); // 300yen
+	let html = "";
+	res_num = {};
+	resB_num = {};
+	for(let i=1; i<result.length;i++){
+        result_ = result[i].split(',');
+
+		let i_id = result_[0];
+		let i_res = result_[2];
+		let i_m = result_[12];
+		// console.log(String(i_res).length);
+		let item_ = "";
+
+		// if(isNaN(i_res) === false) {
+		// }
+		// i_res = String(i_res);
+		
+		
+		if(!i_res) return false;
+		i_res = i_res.split(" ");
+			for(let i=0;i<i_res.length;i++) {
+				// console.log(i_res.slice(i,i+1));
+				// i_ = i_res.slice(i,i+1);
+				i_ = i_res[i];
+				i_c = 0;
+				i_b = back_num(i_);
+				if(!res_num[`n${i_}`]) {res_num[`n${i_}`] = 1;}else{res_num[`n${i_}`] += 1;}
+				if(!resB_num[`n${i_b}`]) {resB_num[`n${i_b}`] = 1;}else{resB_num[`n${i_b}`] += 1}
+				item_ += `<span class="c-n c-${i_}">${i_}<span class="c-b">${i_b}</span></span>`;
+			};
+
+		html += `<li class="p-result__item" id="n${i_id}">
+		<div class="p-result__id">${i_id}</div>
+		<div class="p-result__number">${item_}</div>
+		<div class="p-result__memo">${i_m}</div>
+		</li>`
+		;
+		console.log(html);
+	}
+	// console.log(res_num);
+	// console.log(resB_num);
+	f_num_count();
+	result_box.innerHTML = html;
+
+	initialize();
+}
+
 const formatJSON = function(json){
 	// JSONファイルを整形して表示
 	let html = "";
@@ -139,7 +210,6 @@ const btn_click = function(btn_class = false){
 				e.classList.toggle("act");
 			}
 	}
-	
 	btn_.forEach(function(e) {
 		e.removeEventListener("click", click_function);
 		e.addEventListener("click", click_function);
@@ -180,10 +250,13 @@ const reload_json = function(){
 		json = json_path[0];
 	}
 	// console.log(json);
-	fetch(json)
-		.then( response => response.json())
-		.then( data => formatJSON(data));
-}
+
+	// fetch(json)
+		// .then( response => response.json())
+		// .then( data => formatJSON(data));
+		getCSV(json);
+	}
+
 // 起動時の処理
 window.addEventListener("load", ()=>{
 	// getUrlQueries();
