@@ -159,8 +159,41 @@ main{
     flex-flow: column;
     /* height: 100%; */
 }
-.p-num__box["data-num=37"] li,
-.p-num__box["data-num=43"] li{
+.p-num__box[data-num="9"] > li{
+    display:none;
+}
+.p-num__box[data-num="9"] .c-0,
+.p-num__box[data-num="9"] .c-1,
+.p-num__box[data-num="9"] .c-2,
+.p-num__box[data-num="9"] .c-3,
+.p-num__box[data-num="9"] .c-4,
+.p-num__box[data-num="9"] .c-5,
+.p-num__box[data-num="9"] .c-6,
+.p-num__box[data-num="9"] .c-7,
+.p-num__box[data-num="9"] .c-8,
+.p-num__box[data-num="9"] .c-9{
+    display:flex!important;
+}
+.p-num__box .c-0{
+    display:none;
+}
+.p-num__box .c-0{
+    display:none;
+}
+.p-num__box[data-num="37"] .c-38,
+.p-num__box[data-num="37"] .c-39,
+.p-num__box[data-num="37"] .c-40,
+.p-num__box[data-num="37"] .c-41,
+.p-num__box[data-num="37"] .c-42,
+.p-num__box[data-num="37"] .c-43{
+    display:none;
+}
+.p-num__box[data-num="43"] .c-0,
+.p-num__box[data-num="37"] .c-0{
+    display:none;
+}
+.p-num__box[data-num="37"] li,
+.p-num__box[data-num="43"] li{
     max-width: 30px;
 }
 

@@ -38,7 +38,6 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
         // result[i] = tmp[i].split(',');
     // }
 
-
 	let html = "";
 	res_num = {};
 	resB_num = {};
@@ -46,10 +45,7 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 	let limit_ = 1000;
 	let set_limit = limit_;
 	if(result.length >= limit_) set_limit = result.length - set_limit;
-	// console.log(result.length);
-	console.log(result.length);
-	for(let i=0; i<result.length;i++){
-		if(result.length >=limit_ && i<set_limit) continue;
+	for(let i=set_limit; i<result.length;i++){
 	// for(let i=6970; i<result.length;i++){
 		// console.log(html);
 		
@@ -58,13 +54,7 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 		// console.log(result_);
 
 		let i_id = result_[0];
-		if(queries == 37){
-			i_res = `${result_[2]} ${result_[3]} ${result_[4]} ${result_[5]} ${result_[6]} ${result_[7]} ${result_[8]} ${result_[9]} ${result_[10]}`;
-		}else if(queries == 43){
-			i_res = `${result_[2]} ${result_[3]} ${result_[4]} ${result_[5]} ${result_[6]} ${result_[7]} ${result_[8]}`;
-		}else{
-			i_res = result_[2];
-		}
+		let i_res = result_[2];
 		let i_m = result_[12];
 		// console.log(i_res);
 		let item_ = "";
@@ -74,7 +64,7 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 		// i_res = String(i_res);
 		
 		if(!i_res) return false;
-		if(queries == 9) {i_res = String(i_res).split('');}else{i_res = i_res.split(" ");}
+		if(String(i_res).length>=3) {i_res = String(i_res).split('');}else{i_res = i_res.split(" ");}
 		// i_res = i_res.split(" ");
 		for(let i=0;i<i_res.length;i++) {
 			// console.log(i_res.slice(i,i+1));
@@ -87,11 +77,11 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 			item_ += `<span class="c-n c-${i_}">${i_}<span class="c-b">${i_b}</span></span>`;
 		};
 
-		html = `<li class="p-result__item" id="n${i_id}">
+		html += `<li class="p-result__item" id="n${i_id}">
 		<div class="p-result__id">${i_id}</div>
 		<div class="p-result__number">${item_}</div>
 		<div class="p-result__memo">${i_m}</div>
-		</li>\n${html}`;
+		</li>`;
 	}
 	// console.log(html);
 	// console.log(res_num);
@@ -164,32 +154,20 @@ const formatJSON = function(json){
 // }
 
 
-const f_numbtn_make = function(){
-	const st = 43;
+const f_num_list = function(st = "9"){
+	// let status = st;
+	if(queries && queries !== "" && queries == 9||queries == 37 ||queries == 43) st = queries;
+	// console.log(st);
 	const num = document.querySelector('#js-num_list');
 	num.setAttribute("data-num",queries);
 	const set_list = st;
 	let list_html = '';
 	let ii = 1;
-	for(let i = 0;i<= set_list;i++){
+	if(queries == "9") ii = 0;
+	for(let i = ii;i<= set_list;i++){
 		list_html += `<li class="c-btn c-${i}" data-num="${i}">${i}<div class="c-rBox"><span class="c-r"></span><span class="c-rb"></span></div></li>`;
 	}
 	num.innerHTML = list_html;
-}();
-
-const f_num_list = function(st = "9"){
-	// let status = st;
-	if(queries && queries !== "" && queries == 9||queries == 37 ||queries == 43) st = queries;
-	// st = 43;
-	const num = document.querySelector('#js-num_list');
-	num.setAttribute("data-num",queries);
-	// const set_list = st;
-	// let list_html = '';
-	// let ii = 1;
-	// for(let i = 0;i<= set_list;i++){
-		// list_html += `<li class="c-btn c-${i}" data-num="${i}">${i}<div class="c-rBox"><span class="c-r"></span><span class="c-rb"></span></div></li>`;
-	// }
-	// num.innerHTML = list_html;
 };
 
 document.querySelector("#js-menu").addEventListener("click", (e)=>{
@@ -222,7 +200,7 @@ const btn_click = function(btn_class = false){
 			if(e.closest("#nav")) {
 				if(e.dataset.q) queries = e.dataset.q;
 				if(document.querySelectorAll("#nav .act").length>=1) document.querySelector("#nav .act").classList.remove("act");
-				console.log(queries);
+				// console.log(queries);
 				f_num_list(queries);
 				reload_json();
 				// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
@@ -277,6 +255,7 @@ const reload_json = function(){
 	}else {
 		json = json_path[0];
 	}
+	// console.log(json);
 
 	// fetch(json)
 		// .then( response => response.json())
