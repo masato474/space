@@ -255,3 +255,16 @@ main{
 }
 .l-nav__list li{}
 .l-nav__list a{}
+
+.l-nav__link{}
+.l-nav__link__list{
+    position: absolute;
+    top:0;
+    right:0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display:flex;
+    gap:8px;
+}
+.l-nav__link__list li{}

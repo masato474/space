@@ -22,6 +22,13 @@ function getCSV(path){
     req.send(null); // HTTPリクエストの発行
 	// console.log(path);
     // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
+	document.querySelector('#js-result').setAttribute('class','p-result__box');
+	let numlist_act =  document.querySelectorAll('#js-num_list .act');
+	if(numlist_act.length>=1) {
+		numlist_act.forEach(function(i) {
+			i.classList.remove('act');
+		});
+	}
     req.onload = function(){
 	convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
     }
@@ -42,20 +49,15 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 	let html = "";
 	res_num = {};
 	resB_num = {};
-	// console.log(result.length);
 	let limit_ = 1000;
 	let set_limit = limit_;
 	if(result.length >= limit_) set_limit = result.length - set_limit;
-	// console.log(result.length);
-	console.log(result.length);
 	for(let i=0; i<result.length;i++){
 		if(result.length >=limit_ && i<set_limit) continue;
 	// for(let i=6970; i<result.length;i++){
-		// console.log(html);
 		
         result_ = result[i].split(',');
 		if(result_ == '') continue;
-		// console.log(result_);
 
 		let i_id = result_[0];
 		if(queries == 37){
@@ -66,7 +68,6 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 			i_res = result_[2];
 		}
 		let i_m = result_[12];
-		// console.log(i_res);
 		let item_ = "";
 
 		// if(isNaN(i_res) === false) {
@@ -76,13 +77,15 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 		if(!i_res) return false;
 		if(queries == 9) {i_res = String(i_res).split('');}else{i_res = i_res.split(" ");}
 		// i_res = i_res.split(" ");
+		// console.log('j')
 		for(let i=0;i<i_res.length;i++) {
 			// console.log(i_res.slice(i,i+1));
 			// i_ = i_res.slice(i,i+1);
 			i_ = i_res[i];
 			i_c = 0;
 			i_b = back_num(i_);
-			if(!res_num[`n${i_}`]) {res_num[`n${i_}`] = 1;}else{res_num[`n${i_}`] += 1;}
+			set_i_ = Number(i_);
+			if(!res_num[`n${set_i_}`]) {res_num[`n${set_i_}`] = 1;}else{res_num[`n${set_i_}`] += 1;}
 			if(!resB_num[`n${i_b}`]) {resB_num[`n${i_b}`] = 1;}else{resB_num[`n${i_b}`] += 1}
 			item_ += `<span class="c-n c-${i_}">${i_}<span class="c-b">${i_b}</span></span>`;
 		};
@@ -100,10 +103,10 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 	result_box.innerHTML = html;
 	f_num_count();
 
-	initialize();
+	// initialize();
 }
 
-
+//no use
 const formatJSON = function(json){
 	// JSONファイルを整形して表示
 	let html = "";
@@ -111,7 +114,6 @@ const formatJSON = function(json){
 	resB_num = {};
 	for(let i of json.data){
 		let i_res = i.res;
-		// console.log(String(i_res).length);
 		let item_ = "";
 
 		// if(isNaN(i_res) === false) {
@@ -120,7 +122,6 @@ const formatJSON = function(json){
 
 			i_res = i_res.split(" ");
 			for(let i=0;i<i_res.length;i++) {
-				// console.log(i_res.slice(i,i+1));
 				// i_ = i_res.slice(i,i+1);
 				i_ = i_res[i];
 				i_c = 0;
@@ -203,7 +204,6 @@ const btn_click = function(btn_class = false){
 
 	function click_function(){
 			e = this;
-			// console.log(e.getAttribute("class"));
 			// if(!e.hasAttribute("class")) return false;
 
 			//btn toggle act
@@ -213,7 +213,7 @@ const btn_click = function(btn_class = false){
 			
 			//下部ボタン
 			if(e.closest("#js-num_list")) {
-				e.classList.toggle("act");
+				if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
 				result_box.classList.add("c-act");
 				if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
 			}
@@ -222,22 +222,21 @@ const btn_click = function(btn_class = false){
 			if(e.closest("#nav")) {
 				if(e.dataset.q) queries = e.dataset.q;
 				if(document.querySelectorAll("#nav .act").length>=1) document.querySelector("#nav .act").classList.remove("act");
-				console.log(queries);
 				f_num_list(queries);
 				reload_json();
 				// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
-				e.classList.toggle("act");
+				if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
+				
 			}
 
 			//backnumボタン
 			if(e.hasAttribute("id") == "js-backNum") {
 				if(e.dataset.q) queries = e.dataset.q;
 				if(document.querySelectorAll("#nav .act").length>=1) document.querySelector("#nav .act").classList.remove("act");
-				// console.log(queries);
 				f_num_list(queries);
 				reload_json();
 				// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
-				e.classList.toggle("act");
+				if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
 			}
 	}
 	btn_.forEach(function(e) {
@@ -259,7 +258,9 @@ const f_num_count = function(){
 			set_key = key.replace("n","");
 			if(set_key == '') continue;
 			if(st == false){
-				if(set_key && document.querySelector(`.c-${set_key}`)) document.querySelector(`.c-${set_key} .c-r`).textContent = da[key];
+				if(set_key && document.querySelector(`.c-${set_key}`)) {
+					document.querySelector(`.c-${set_key} .c-r`).textContent = da[key];
+				}
 			}else{
 				if(set_key && document.querySelector(`.c-${set_key}`)) document.querySelector(`.c-${set_key} .c-rb`).textContent = da[key];
 			}
@@ -290,6 +291,7 @@ window.addEventListener("load", ()=>{
 	// console.log(queries);
 
 	reload_json();
+	initialize();
 	f_num_list();
 
 });
