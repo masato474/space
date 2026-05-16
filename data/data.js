@@ -19,6 +19,7 @@ let resB_num = {};
 function func_bottom_btn(e){
 	let data_num = "";
 	if(e.dataset.num) data_num = e.dataset.num;
+	console.log(data_num);
 	if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
 
 	if(e.classList.contains("act")){
@@ -72,7 +73,6 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 	let old_stock = "";
 	let old_stock_b = "";
 
-	tes = ["2","3","4"]
 	for(let i=0; i<result.length;i++){
 
 		if(result.length >=limit_ && i<set_limit) continue;
@@ -120,7 +120,9 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 
 			set_i_ = Number(i_);
 
-			if(i>=1 && old_stock.includes(i_)) set_stock_flg = " act";
+			if(i>=1 && old_stock.includes(i_)) {
+				set_stock_flg = " act";
+			}
 
 			if(i>=1 && old_stock_b.includes(set_i_)) {
 				set_stock_b_flg = " act";
@@ -139,7 +141,11 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 		<div class="p-result__memo">${i_m}</div>
 		</li>\n${html}`;
 
-		old_stock = i_res;
+		if(queries == 9){
+			old_stock = [i_res[1],i_res[2]];
+		}else{
+			old_stock = i_res;
+		}
 		old_stock_b = set_stock_b;
 	}
 	// console.log(html);
