@@ -16,13 +16,28 @@ const back_num = function(i,queries = 9){
 let res_num = {};
 let resB_num = {};
 
+function func_bottom_btn(e){
+	let data_num = "";
+	if(e.dataset.num) data_num = e.dataset.num;
+	if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
+
+	if(e.classList.contains("act")){
+		e.classList.remove("act");
+	}else{
+		e.classList.add("act");
+	}
+	result_box.classList.add("c-act");
+	if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
+}
+
 function getCSV(path){
     var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
     req.open("get", path, true); // アクセスするファイルを指定
     req.send(null); // HTTPリクエストの発行
 	// console.log(path);
     // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
-	document.querySelector('#js-result').setAttribute('class','p-result__box');
+	// document.querySelector('#js-result').setAttribute('class','p-result__box');
+	result_box.setAttribute('class','p-result__box');
 	let numlist_act =  document.querySelectorAll('#js-num_list .act');
 	if(numlist_act.length>=1) {
 		numlist_act.forEach(function(i) {
@@ -31,6 +46,8 @@ function getCSV(path){
 	}
     req.onload = function(){
 	convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
+	
+	btn_numList_click();
     }
 }
 
@@ -95,6 +112,7 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 		for(let i=0;i<i_res.length;i++) {
 			// console.log(i_res.slice(i,i+1));
 			i_ = i_res[i];
+			i_n = Number(i_)
 			i_c = 0;
 			i_b = back_num(i_);
 
@@ -110,7 +128,7 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 
 			if(!res_num[`n${set_i_}`]) {res_num[`n${set_i_}`] = 1;}else{res_num[`n${set_i_}`] += 1;}
 			if(!resB_num[`n${i_b}`]) {resB_num[`n${i_b}`] = 1;}else{resB_num[`n${i_b}`] += 1}
-			item_ += `<span class="c-n c-${i_}">${i_}<span class="c-b">${i_b}</span></span>`;
+			item_ += `<span class="c-n c-${i_n}" data-num="${i_n}">${i_}<span class="c-b">${i_b}</span></span>`;
 		};
 		html = `<li class="p-result__item" id="n${i_id}" >
 		<div class="p-result__id">${i_id}</div>
@@ -196,7 +214,7 @@ const formatJSON = function(json){
 const f_numbtn_make = function(){
 	const st = 43;
 	const num = document.querySelector('#js-num_list');
-	num.setAttribute("data-num",queries);
+	document.querySelector('#js-query').setAttribute("data-num",queries);
 	const set_list = st;
 	let list_html = '';
 	let ii = 1;
@@ -211,7 +229,7 @@ const f_num_list = function(st = "9"){
 	if(queries && queries !== "" && queries == 9||queries == 37 ||queries == 43) st = queries;
 	// st = 43;
 	const num = document.querySelector('#js-num_list');
-	num.setAttribute("data-num",queries);
+	document.querySelector("#js-query").setAttribute("data-num",queries);
 	// const set_list = st;
 	// let list_html = '';
 	// let ii = 1;
@@ -225,6 +243,19 @@ document.querySelector("#js-menu").addEventListener("click", (e)=>{
 	e.target.closest('#nav').classList.toggle("act");
 });
 
+const btn_numList_click = function(){
+	let c_n = document.querySelectorAll('#js-result .c-n');
+	c_n.forEach(function(i) {
+		i.addEventListener("click", (e)=>{
+			n = i.dataset.num;
+			item_ = document.querySelector(`#js-num_list .c-btn[data-num="${n}"]`);
+			// console.log(item_);
+			func_bottom_btn(item_);
+		});
+	});
+	// document.querySelectorAll('#js-num_list .c-btn');
+}
+
 const btn_click = function(btn_class = false){
 
 	if(btn_class == false) return false;
@@ -234,19 +265,20 @@ const btn_click = function(btn_class = false){
 		e = this;
 
 		//btn toggle act
-		let data_num = "";
-		if(e.dataset.num) data_num = e.dataset.num;
-		if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
+		// let data_num = "";
+		// if(e.dataset.num) data_num = e.dataset.num;
+		// if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
 		
 		//下部ボタン
 		if(e.closest("#js-num_list")) {
-			if(e.classList.contains("act")){
-				e.classList.remove("act");
-			}else{
-				e.classList.add("act");
-			}
-			result_box.classList.add("c-act");
-			if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
+			func_bottom_btn(e);
+			// if(e.classList.contains("act")){
+			// 	e.classList.remove("act");
+			// }else{
+			// 	e.classList.add("act");
+			// }
+			// result_box.classList.add("c-act");
+			// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
 		}
 
 		//navボタン

@@ -65,6 +65,12 @@ main{
 .c-act .p-result__number .c-n{
     opacity: var(--active);
 }
+#js-query[data-num="43"] .p-result__number .c-n:nth-of-type(8),
+#js-query[data-num="37"] .p-result__number .c-n:nth-of-type(9),
+#js-query[data-num="37"] .p-result__number .c-n:nth-of-type(10){
+    opacity: .6;
+
+}
 .c-act.c-1 .p-result__number .c-1,
 .c-act.c-2 .p-result__number .c-2,
 .c-act.c-3 .p-result__number .c-3,
@@ -159,19 +165,19 @@ main{
     flex-flow: column;
     /* height: 100%; */
 }
-.p-num__box[data-num="9"] > li{
+#js-query[data-num="9"] .p-num__box > li{
     display:none;
 }
-.p-num__box[data-num="9"] .c-0,
-.p-num__box[data-num="9"] .c-1,
-.p-num__box[data-num="9"] .c-2,
-.p-num__box[data-num="9"] .c-3,
-.p-num__box[data-num="9"] .c-4,
-.p-num__box[data-num="9"] .c-5,
-.p-num__box[data-num="9"] .c-6,
-.p-num__box[data-num="9"] .c-7,
-.p-num__box[data-num="9"] .c-8,
-.p-num__box[data-num="9"] .c-9{
+#js-query[data-num="9"] .p-num__box  .c-0,
+#js-query[data-num="9"] .p-num__box  .c-1,
+#js-query[data-num="9"] .p-num__box  .c-2,
+#js-query[data-num="9"] .p-num__box  .c-3,
+#js-query[data-num="9"] .p-num__box  .c-4,
+#js-query[data-num="9"] .p-num__box  .c-5,
+#js-query[data-num="9"] .p-num__box  .c-6,
+#js-query[data-num="9"] .p-num__box  .c-7,
+#js-query[data-num="9"] .p-num__box  .c-8,
+#js-query[data-num="9"] .p-num__box  .c-9{
     display:flex!important;
 }
 .p-num__box .c-0{
@@ -180,20 +186,20 @@ main{
 .p-num__box .c-0{
     display:none;
 }
-.p-num__box[data-num="37"] .c-38,
-.p-num__box[data-num="37"] .c-39,
-.p-num__box[data-num="37"] .c-40,
-.p-num__box[data-num="37"] .c-41,
-.p-num__box[data-num="37"] .c-42,
-.p-num__box[data-num="37"] .c-43{
+#js-query[data-num="37"] .p-num__box .c-38,
+#js-query[data-num="37"] .p-num__box .c-39,
+#js-query[data-num="37"] .p-num__box .c-40,
+#js-query[data-num="37"] .p-num__box .c-41,
+#js-query[data-num="37"] .p-num__box .c-42,
+#js-query[data-num="37"] .p-num__box .c-43{
     display:none;
 }
-.p-num__box[data-num="43"] .c-0,
-.p-num__box[data-num="37"] .c-0{
+#js-query[data-num="43"] .p-num__box .c-0,
+#js-query[data-num="37"] .p-num__box .c-0{
     display:none;
 }
-.p-num__box[data-num="37"] li,
-.p-num__box[data-num="43"] li{
+#js-query[data-num="37"] .p-num__box li,
+#js-query[data-num="43"] .p-num__box li{
     max-width: 30px;
 }
 
@@ -276,7 +282,7 @@ main{
     margin-right:3px;
 }
 .c-memo i{
-    width: 4px;
+    width: 5px;
     height: 100%;
 }
 .c-memo .c-memo_u2.act{
