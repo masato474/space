@@ -52,19 +52,21 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 	let limit_ = 1000;
 	let set_limit = limit_;
 	if(result.length >= limit_) set_limit = result.length - set_limit;
+	let old_stock = "";
+	let old_stock_b = [];
 	for(let i=0; i<result.length;i++){
+
 		if(result.length >=limit_ && i<set_limit) continue;
-	// for(let i=6970; i<result.length;i++){
 		
         result_ = result[i].split(',');
 		if(result_ == '') continue;
 
 		let i_id = result_[0];
-		if(queries == 37){
+		if(queries == 37){//7
 			i_res = `${result_[2]} ${result_[3]} ${result_[4]} ${result_[5]} ${result_[6]} ${result_[7]} ${result_[8]} ${result_[9]} ${result_[10]}`;
-		}else if(queries == 43){
+		}else if(queries == 43){//6
 			i_res = `${result_[2]} ${result_[3]} ${result_[4]} ${result_[5]} ${result_[6]} ${result_[7]} ${result_[8]}`;
-		}else{
+		}else{//3
 			i_res = result_[2];
 		}
 		let i_m = result_[12];
@@ -75,26 +77,42 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 		// i_res = String(i_res);
 		
 		if(!i_res) return false;
-		if(queries == 9) {i_res = String(i_res).split('');}else{i_res = i_res.split(" ");}
-		// i_res = i_res.split(" ");
-		// console.log('j')
+
+
+		if(queries == 9) {//3
+			i_res = String(i_res).split('');
+		}else{//6 or 7
+			i_res = i_res.split(" ");
+		}
+
+		set_stock_b = [];
+		//result list make
 		for(let i=0;i<i_res.length;i++) {
 			// console.log(i_res.slice(i,i+1));
-			// i_ = i_res.slice(i,i+1);
 			i_ = i_res[i];
 			i_c = 0;
 			i_b = back_num(i_);
+
+			set_stock_b.push(i_b);
+
+			// if(old_stock[1])
+
 			set_i_ = Number(i_);
 			if(!res_num[`n${set_i_}`]) {res_num[`n${set_i_}`] = 1;}else{res_num[`n${set_i_}`] += 1;}
 			if(!resB_num[`n${i_b}`]) {resB_num[`n${i_b}`] = 1;}else{resB_num[`n${i_b}`] += 1}
-			item_ += `<span class="c-n c-${i_}">${i_}<span class="c-b">${i_b}</span></span>`;
+			item_ += `
+			<span class="c-memo"><i class="c-memo_u2"></i><i class="c-memo_b2"></i><i class="c-memo_o2"></i></span>
+			<span class="c-n c-${i_}">${i_}<span class="c-b">${i_b}</span></span>`;
 		};
 
-		html = `<li class="p-result__item" id="n${i_id}">
+		html = `<li class="p-result__item" id="n${i_id}" >
 		<div class="p-result__id">${i_id}</div>
 		<div class="p-result__number">${item_}</div>
 		<div class="p-result__memo">${i_m}</div>
 		</li>\n${html}`;
+
+		old_stock = i_res;
+		old_stock_b = set_stock_b;
 	}
 	// console.log(html);
 	// console.log(res_num);
@@ -203,41 +221,44 @@ const btn_click = function(btn_class = false){
 	let btn_ = document.querySelectorAll(btn_class);
 
 	function click_function(){
-			e = this;
-			// if(!e.hasAttribute("class")) return false;
+		e = this;
 
-			//btn toggle act
-			let data_num = "";
-			if(e.dataset.num) data_num = e.dataset.num;
-			if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
+		//btn toggle act
+		let data_num = "";
+		if(e.dataset.num) data_num = e.dataset.num;
+		if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
+		
+		//下部ボタン
+		if(e.closest("#js-num_list")) {
+			if(e.classList.contains("act")){
+				e.classList.remove("act");
+			}else{
+				e.classList.add("act");
+			}
+			result_box.classList.add("c-act");
+			if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
+		}
+
+		//navボタン
+		if(e.closest("#nav")) {
+			if(e.dataset.q) queries = e.dataset.q;
+			if(document.querySelectorAll("#nav .act").length>=1) document.querySelector("#nav .act").classList.remove("act");
+			f_num_list(queries);
+			reload_json();
+			// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
+			if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
 			
-			//下部ボタン
-			if(e.closest("#js-num_list")) {
-				if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
-				result_box.classList.add("c-act");
-				if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
-			}
+		}
 
-			//navボタン
-			if(e.closest("#nav")) {
-				if(e.dataset.q) queries = e.dataset.q;
-				if(document.querySelectorAll("#nav .act").length>=1) document.querySelector("#nav .act").classList.remove("act");
-				f_num_list(queries);
-				reload_json();
-				// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
-				if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
-				
-			}
-
-			//backnumボタン
-			if(e.hasAttribute("id") == "js-backNum") {
-				if(e.dataset.q) queries = e.dataset.q;
-				if(document.querySelectorAll("#nav .act").length>=1) document.querySelector("#nav .act").classList.remove("act");
-				f_num_list(queries);
-				reload_json();
-				// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
-				if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
-			}
+		//backnumボタン
+		if(e.hasAttribute("id") == "js-backNum") {
+			if(e.dataset.q) queries = e.dataset.q;
+			if(document.querySelectorAll("#nav .act").length>=1) document.querySelector("#nav .act").classList.remove("act");
+			f_num_list(queries);
+			reload_json();
+			// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
+			if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
+		}
 	}
 	btn_.forEach(function(e) {
 		e.removeEventListener("click", click_function);
