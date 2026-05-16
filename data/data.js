@@ -53,7 +53,9 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 	let set_limit = limit_;
 	if(result.length >= limit_) set_limit = result.length - set_limit;
 	let old_stock = "";
-	let old_stock_b = [];
+	let old_stock_b = "";
+
+	tes = ["2","3","4"]
 	for(let i=0; i<result.length;i++){
 
 		if(result.length >=limit_ && i<set_limit) continue;
@@ -86,28 +88,36 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 		}
 
 		set_stock_b = [];
+		set_stock_flg = "";
+		set_stock_b_flg = "";
 		//result list make
+		
 		for(let i=0;i<i_res.length;i++) {
 			// console.log(i_res.slice(i,i+1));
 			i_ = i_res[i];
 			i_c = 0;
 			i_b = back_num(i_);
 
-			set_stock_b.push(i_b);
-
-			// if(old_stock[1])
+			if(i>=1) set_stock_b.push(i_b);
 
 			set_i_ = Number(i_);
+
+			if(i>=1 && old_stock.includes(i_)) set_stock_flg = " act";
+
+			if(i>=1 && old_stock_b.includes(set_i_)) {
+				set_stock_b_flg = " act";
+			}
+
 			if(!res_num[`n${set_i_}`]) {res_num[`n${set_i_}`] = 1;}else{res_num[`n${set_i_}`] += 1;}
 			if(!resB_num[`n${i_b}`]) {resB_num[`n${i_b}`] = 1;}else{resB_num[`n${i_b}`] += 1}
-			item_ += `
-			<span class="c-memo"><i class="c-memo_u2"></i><i class="c-memo_b2"></i><i class="c-memo_o2"></i></span>
-			<span class="c-n c-${i_}">${i_}<span class="c-b">${i_b}</span></span>`;
+			item_ += `<span class="c-n c-${i_}">${i_}<span class="c-b">${i_b}</span></span>`;
 		};
-
 		html = `<li class="p-result__item" id="n${i_id}" >
 		<div class="p-result__id">${i_id}</div>
-		<div class="p-result__number">${item_}</div>
+		<div class="p-result__number">
+		<span class="c-memo"><i class="c-memo_u2${set_stock_flg}"></i><i class="c-memo_b2${set_stock_b_flg}"></i><i class="c-memo_o2"></i></span>
+		${item_}
+		</div>
 		<div class="p-result__memo">${i_m}</div>
 		</li>\n${html}`;
 

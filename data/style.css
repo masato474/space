@@ -59,8 +59,8 @@ main{
 .p-result__number{
     display: flex;
     gap: 2px;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;s */
+    /* justify-content: censter; */
 }
 .c-act .p-result__number .c-n{
     opacity: var(--active);
@@ -268,3 +268,23 @@ main{
     gap:8px;
 }
 .l-nav__link__list li{}
+
+.c-memo{
+    display:flex;
+    flex-flow:column;
+    gap:1px;
+    margin-right:3px;
+}
+.c-memo i{
+    width: 4px;
+    height: 100%;
+}
+.c-memo .c-memo_u2.act{
+    background: #f00;
+}
+.c-memo .c-memo_b2.act{
+    background: rgb(0, 183, 255);
+}
+.c-memo .c-memo_o2.act{
+    background: rgba(0, 255, 17, 0.694);
+}
