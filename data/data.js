@@ -31,6 +31,16 @@ function func_bottom_btn(e){
 	if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
 }
 
+const btn_resultId_click = function(){
+	let list =  document.querySelectorAll('#js-result .p-result__id');
+	if(list.length<1) return false;
+	list.forEach(function(i) {
+		i.addEventListener("click", ()=>{
+			i.closest('.p-result__item').classList.toggle('act');
+		});
+	})
+}
+
 function getCSV(path){
     var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
     req.open("get", path, true); // アクセスするファイルを指定
@@ -46,13 +56,14 @@ function getCSV(path){
 		});
 	}
     req.onload = function(){
-	convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
-	
-	btn_numList_click();
-    }
+		convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
+		btn_resultId_click();
+		btn_numList_click();
+	}
 }
 
 // 読み込んだCSVデータを二次元配列に変換する関数convertCSVtoArray()の定義
+let limit_num = document.querySelector('#js-limit');
 function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列として渡される
 	
     // var result = []; // 最終的な二次元配列を入れるための配列
@@ -63,11 +74,11 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
         // result[i] = tmp[i].split(',');
     // }
 
-
 	let html = "";
 	res_num = {};
 	resB_num = {};
 	let limit_ = 1000;
+	if(limit_num.value !== "" && isNaN(limit_num.value) == false) limit_ = limit_num.value;
 	let set_limit = limit_;
 	if(result.length >= limit_) set_limit = result.length - set_limit;
 	let old_stock = "";
@@ -267,7 +278,7 @@ const btn_click = function(btn_class = false){
 	if(btn_class == false) return false;
 	let btn_ = document.querySelectorAll(btn_class);
 
-	function click_function(){
+	function click_function(e_){
 		e = this;
 
 		//btn toggle act
@@ -275,6 +286,12 @@ const btn_click = function(btn_class = false){
 		// if(e.dataset.num) data_num = e.dataset.num;
 		// if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
 		
+		//LINKボタン
+		if(e.closest(".l-nav__link__list")) {
+			e_.preventDefault();
+            navigator.clipboard.writeText(e.getAttribute('href'))
+		}
+
 		//下部ボタン
 		if(e.closest("#js-num_list")) {
 			func_bottom_btn(e);
@@ -318,6 +335,7 @@ const btn_click = function(btn_class = false){
 const initialize = function(){
 	btn_click(".p-num__box > .c-btn");
 	btn_click(".l-nav__list .c-btn");
+	btn_click(".l-nav__link__list .c-btn");
 	btn_click("#js-backNum");
 }
 
