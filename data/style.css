@@ -166,7 +166,7 @@ main{
     flex-flow: column;
     /* height: 100%; */
 }
-#js-query[data-num="9"] #js-selectBox > li,
+/* #js-query[data-num="9"] #js-selectBox > li, */
 #js-query[data-num="9"] .p-num__box > li{
     display:none;
 }
@@ -369,3 +369,13 @@ main{
 .l-select_wrap.act{
 display:block;
 }
+
+#js-selectBox{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap:8px;
+    flex-flow: column;
+}
+#js-selectBox li{}

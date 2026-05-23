@@ -16,10 +16,26 @@ const back_num = function(i,queries = 9){
 let res_num = {};
 let resB_num = {};
 
+function func_selectList_make(st = false,n_ = false){
+	selectList__item = document.querySelectorAll('#js-selectBox .c-selectList__item');
+	if(n_ == false) return false;
+	html = `<li>${n_}</li>`;
+	// selectList__item.forEach(){
+		// html = `<li class="p-result__item" id="n${i_id}" >
+		// <div class="p-result__id">${i_id}</div>
+		// <div class="p-result__number">
+		// <span class="c-memo"><i class="c-memo_u2${set_stock_flg}"></i><i class="c-memo_b2${set_stock_b_flg}"></i><i class="c-memo_o2"></i></span>
+		// ${item_}
+		// </div>
+		// <div class="p-result__memo">${i_m}</div>
+		// </li>\n${html}`;
+		// }
+	document.querySelector('#js-selectBox').insertAdjacentHTML('beforeend',html);
+}
 function func_bottom_btn(e){
 	let data_num = "";
 	if(e.dataset.num) data_num = e.dataset.num;
-	console.log(data_num);
+	// console.log(data_num);
 	if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
 
 	if(e.classList.contains("act")){
@@ -29,6 +45,18 @@ function func_bottom_btn(e){
 	}
 	result_box.classList.add("c-act");
 	if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
+
+	//js-selectBox
+	if(document.querySelector('#js-selectMainAdd').classList.contains('act')){
+		document.querySelector('#js-selectMainAdd').classList.toggle('act');
+		// console.log('m'+data_num);
+		func_selectList_make('main',data_num);
+	}
+	if(document.querySelector('#js-selectSubAdd').classList.contains('act')){
+		// console.log('s'+data_num);
+		func_selectList_make('sub',data_num);
+		// document.querySelector('#js-selectSubAdd').classList.toggle('act');
+	}
 }
 
 const btn_resultId_click = function(){
@@ -346,7 +374,9 @@ let nav__selectBtn = document.querySelectorAll(".l-nav__selectBtn > .c-btn");
 nav__selectBtn.forEach(function(e) {
 	e.addEventListener("click", (i)=>{
 		e.classList.toggle("act");
-		if(e.hasAttribute('id') && e.getAttribute('id')=='js-selectOpen') document.querySelector('#js-selectList').classList.toggle('act');
+		if(e.hasAttribute('id') && e.getAttribute('id')=='js-selectOpen') {
+			document.querySelector('#js-selectList').classList.toggle('act');
+		}
 	});
 });
 
