@@ -19,7 +19,23 @@ let resB_num = {};
 function func_selectList_make(st = false,n_ = false){
 	selectList__item = document.querySelectorAll('#js-selectBox .c-selectList__item');
 	if(n_ == false) return false;
-	html = `<li>${n_}</li>`;
+	let sub_ =  [];
+	if(st == "sub") {
+		sub_list = document.querySelectorAll('#js-num_list .act');
+		sub_list.forEach(function(e){
+			num__ = e.dataset.num;
+			sub_.push(num__);
+		})
+		// console.log(sub_)
+	}
+	if(document.querySelector('#js-selectBox .act')){
+		html = `<p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div>`;
+		document.querySelector('#js-selectBox .act').innerHTML = html;
+	}else{
+		html = `<li class="act"><p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div></li>`;
+		document.querySelector('#js-selectBox').insertAdjacentHTML('beforeend',html);
+	}
+	
 	// selectList__item.forEach(){
 		// html = `<li class="p-result__item" id="n${i_id}" >
 		// <div class="p-result__id">${i_id}</div>
@@ -30,7 +46,7 @@ function func_selectList_make(st = false,n_ = false){
 		// <div class="p-result__memo">${i_m}</div>
 		// </li>\n${html}`;
 		// }
-	document.querySelector('#js-selectBox').insertAdjacentHTML('beforeend',html);
+	
 }
 function func_bottom_btn(e){
 	let data_num = "";

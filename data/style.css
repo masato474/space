@@ -17,6 +17,15 @@ html{
     font-size: 14px;
 }
 
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background: #fff;
+    z-index: 1;
+}
+
 img{}
 
 input,
@@ -378,4 +387,15 @@ display:block;
     gap:8px;
     flex-flow: column;
 }
-#js-selectBox li{}
+#js-selectBox li{
+    display: flex;
+    align-items: center;
+    justify-content: censter;
+}
+.c-selectList__itemTitle{
+    margin:right;
+}
+.c-selectList__itemSub{
+    display:flex;;
+    gap:6px;
+}
