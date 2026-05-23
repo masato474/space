@@ -228,18 +228,23 @@ const formatJSON = function(json){
 // }
 
 
-const f_numbtn_make = function(){
-	const st = 43;
-	const num = document.querySelector('#js-num_list');
+const st = 43;
+const f_numbtn_make = function(id=false){
+	const num = document.querySelector(id);
 	document.querySelector('#js-query').setAttribute("data-num",queries);
 	const set_list = st;
 	let list_html = '';
 	let ii = 1;
 	for(let i = 0;i<= set_list;i++){
-		list_html += `<li class="c-btn c-${i}" data-num="${i}">${i}<div class="c-rBox"><span class="c-r"></span><span class="c-rb"></span></div></li>`;
+		if(id=="#js-num_list"){
+			list_html += `<li class="c-btn c-${i}" data-num="${i}">${i}<div class="c-rBox"><span class="c-r"></span><span class="c-rb"></span></div></li>`;
+		}else{
+			list_html += `<li class="c-btn c-${i}" data-num="${i}">${i}</li>`;
+		}
 	}
 	num.innerHTML = list_html;
-}();
+};
+f_numbtn_make("#js-num_list");
 
 const f_num_list = function(st = "9"){
 	// let status = st;
@@ -272,6 +277,9 @@ const btn_numList_click = function(){
 	});
 	// document.querySelectorAll('#js-num_list .c-btn');
 }
+
+
+// #js-selectInput li
 
 const btn_click = function(btn_class = false){
 
@@ -312,9 +320,11 @@ const btn_click = function(btn_class = false){
 			reload_json();
 			// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
 			if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
+			console.log(queries)
 			
 		}
 
+						
 		//backnumボタン
 		if(e.hasAttribute("id") == "js-backNum") {
 			if(e.dataset.q) queries = e.dataset.q;
@@ -331,8 +341,17 @@ const btn_click = function(btn_class = false){
 	});
 
 }
+//select view
+let nav__selectBtn = document.querySelectorAll(".l-nav__selectBtn > .c-btn");
+nav__selectBtn.forEach(function(e) {
+	e.addEventListener("click", (i)=>{
+		e.classList.toggle("act");
+		if(e.hasAttribute('id') && e.getAttribute('id')=='js-selectOpen') document.querySelector('#js-selectList').classList.toggle('act');
+	});
+});
 
 const initialize = function(){
+	// btn_click(".l-nav__selectBtn > .c-btn");
 	btn_click(".p-num__box > .c-btn");
 	btn_click(".l-nav__list .c-btn");
 	btn_click(".l-nav__link__list .c-btn");

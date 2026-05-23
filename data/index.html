@@ -19,7 +19,13 @@
         <li><span data-q="37" class="c-btn">N7</span></li>
       </ul>
       <div class="c-menu__limit"><input type="tel" id="js-limit"></div>
+      <div class="l-nav__selectBtn">
+        <span class="c-btn" id="js-selectOpen"></span>
+        <span class="c-btn" id="js-selectMainAdd">M</span>
+        <span class="c-btn" id="js-selectSubAdd">S</span>
+      </div>
     </nav>
+    
     <nav class="l-nav__link" id="nav_link">
       <ul class="l-nav__link__list">
         <li><a href="https://www.mk-mode.com/rails/loto/NUMBERS3_ALL.csv" target="_blank" class="c-btn">N3</a></li>
@@ -31,6 +37,15 @@
   </header>
 
   <main>
+  <section>
+    <aside>
+      <div class="l-select_wrap" id="js-selectList">
+        <div id="js-selectBox"></div>
+        <ul id="js-selectInput">
+        </ul>
+      </div>
+    </aside>
+  </section>
   <section>
     <aside>
       <div id="result" class="p-result">
