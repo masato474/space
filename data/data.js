@@ -52,7 +52,12 @@ function func_bottom_btn(e){
 	let data_num = "";
 	if(e.dataset.num) data_num = e.dataset.num;
 	// console.log(data_num);
-	if(data_num !== "") result_box.classList.toggle(`c-${data_num}`);
+	
+	if(data_num !== "") {
+		result_box.classList.toggle(`c-${data_num}`);
+		if(document.querySelector('#js-selectMainAdd').classList.contains('act')||
+			document.querySelector('#js-result').classList.contains(`c-${data_num}--Main`)) document.querySelector('#js-result').classList.toggle(`c-${data_num}--Main`);
+	}
 
 	if(e.classList.contains("act")){
 		e.classList.remove("act");
