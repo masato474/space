@@ -6,11 +6,11 @@
 const json_path = ["NUMBERS3_ALL.csv","LOTO6_ALL.csv","LOTO7_ALL.csv"];	// 読み込むJSONファイル
 const result_box = document.querySelector("#js-result");
 let queries = 9;
+let before_count = 5;
 const back_num = function(i,queries = 9){
 	// 0>5 1>6 2>7 3>8 4>9
 	i_c = Number(i);
 	if(i_c < 5){i_c = i_c+5;}else{i_c = i_c-5}
-
 	return i_c;
 }
 let res_num = {};
@@ -107,6 +107,7 @@ function getCSV(path){
     req.onload = function(){
 		convertCSVtoArray(req.responseText); // 渡されるのは読み込んだCSVデータ
 		btn_resultId_click();
+		btn_resultList_click();
 		btn_numList_click();
 	}
 }
@@ -198,6 +199,8 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 		<div class="p-result__number">
 		<span class="c-memo"><i class="c-memo_u2${set_stock_flg}"></i><i class="c-memo_b2${set_stock_b_flg}"></i><i class="c-memo_o2"></i></span>
 		${item_}
+		</div>
+		<div class="p-result__beforeNum">
 		</div>
 		<div class="p-result__memo">${i_m}</div>
 		</li>\n${html}`;
@@ -315,6 +318,45 @@ document.querySelector("#js-menu").addEventListener("click", (e)=>{
 	e.target.closest('#nav').classList.toggle("act");
 });
 
+
+const btn_resultList_click = function(){
+	let item = document.querySelectorAll('#js-result .p-result__item');
+	item.forEach(function(i) {
+		i.addEventListener("click", (e)=>{
+			if(document.querySelector("#js-limit").value !== "" && Number(document.querySelector("#js-limit").value)) before_count = document.querySelector("#js-limit").value;
+			this_ = Number(i.getAttribute('id').replace('n',""));
+
+			let this_bofore = i.querySelectorAll('.c-n');
+			let before_n = [];
+			for(let j=1;j<=before_count;j++){
+				let n = this_ - j;
+				if(n<1) return false;
+				let n_id = String(n);
+				// console.log(document.querySelector(`#n${n_id}`));
+				let get_c_n = document.querySelectorAll(`#n${n_id} .c-n`);
+				get_c_n.forEach((c,index)=>{
+					// if(index === 0) return;
+					if(!before_n.includes(c.dataset.num)) before_n.push(c.dataset.num);
+					// console.log(index)
+				})
+			}
+			let before_n_ = before_n;
+			if(before_n.length>=2) {
+				before_n_ = "";
+				before_n.forEach((c) =>{
+					before_n_ += " "+c;
+				})
+			}
+			i.querySelector('.p-result__beforeNum').textContent = before_n_;
+
+			// console.log(this_bofore[1].dataset.num);
+			if(before_n.includes(this_bofore[1].dataset.num) && before_n.includes(this_bofore[2].dataset.num)){
+				i.classList.add('act');
+			}
+			// console.log(before_n);
+		});
+	});
+}
 const btn_numList_click = function(){
 	let c_n = document.querySelectorAll('#js-result .c-n');
 	c_n.forEach(function(i) {
