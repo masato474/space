@@ -3,7 +3,7 @@
  */
 
 // const json_path = ["data.json","data6.json","data7.json"];	// 読み込むJSONファイル
-const json_path = ["n3.csv","l6.csv","l7.csv"];	// 読み込むJSONファイル
+const json_path = ["NUMBERS3_ALL.csv","LOTO6_ALL.csv","LOTO7_ALL.csv"];	// 読み込むJSONファイル
 const result_box = document.querySelector("#js-result");
 let queries = 9;
 const back_num = function(i,queries = 9){
@@ -92,7 +92,7 @@ const btn_resultId_click = function(){
 
 function getCSV(path){
     var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
-    req.open("get", path, true); // アクセスするファイルを指定
+    req.open("get", "log/"+path, true); // アクセスするファイルを指定
     req.send(null); // HTTPリクエストの発行
 	// console.log(path);
     // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
@@ -175,10 +175,11 @@ function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列と�
 			i_n = Number(i_)
 			i_c = 0;
 			i_b = back_num(i_);
-
+			
 			if(i>=1) set_stock_b.push(i_b);
-
+			
 			set_i_ = Number(i_);
+			if(Number.isNaN(set_i_)) continue;
 
 			if(i>=1 && old_stock.includes(i_)) {
 				set_stock_flg = " act";
@@ -369,7 +370,7 @@ const btn_click = function(btn_class = false){
 			reload_json();
 			// if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
 			if(e.classList.contains("act")){e.classList.remove("act");}else{e.classList.add("act");}
-			console.log(queries)
+			// console.log(queries)
 			
 		}
 
