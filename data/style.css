@@ -41,6 +41,10 @@ main{
 }
 
 /**/
+.p-result{
+    overflow: auto;
+    width:calc(100vw - 32px);
+}
 .p-result__box{
 	margin: 0 auto;
 	padding:0;
@@ -48,6 +52,9 @@ main{
     display: flex;
     flex-flow: column;
     gap: 8px;
+    width:100%;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .p-result__box > li{
@@ -125,6 +132,8 @@ main{
 .c-act.c-42 .p-result__number .c-42,
 .c-act.c-43 .p-result__number .c-43{
     opacity: initial;
+    color: #fff;
+    background: #05F;
 }
 
 .p-result__memo{margin: 0 0 0 auto;}
@@ -185,7 +194,7 @@ main{
 .c-41--Main .c-41,
 .c-42--Main .c-42,
 .c-43--Main .c-43{
-    background: #fa0;
+    background: #fa0!important;
 }
 
 
@@ -275,7 +284,7 @@ main{
 }
 #js-query[data-num="37"] .p-num__box li,
 #js-query[data-num="43"] .p-num__box li{
-    max-width: 30px;
+    max-width: 25px;
 }
 
 .c-btn{

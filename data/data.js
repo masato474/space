@@ -351,7 +351,7 @@ const btn_resultList_click = function(){
 
 			// console.log(this_bofore[1].dataset.num);
 			if(before_n.includes(this_bofore[1].dataset.num) && before_n.includes(this_bofore[2].dataset.num)){
-				i.classList.add('act');
+				i.classList.toggle('act');
 			}
 			// console.log(before_n);
 		});
