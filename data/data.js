@@ -17,24 +17,49 @@ let res_num = {};
 let resB_num = {};
 
 function func_selectList_make(st = false,n_ = false){
-	selectList__item = document.querySelectorAll('#js-selectBox .c-selectList__item');
-	if(n_ == false) return false;
-	let sub_ =  [];
-	if(st == "sub") {
-		sub_list = document.querySelectorAll('#js-num_list .act');
-		sub_list.forEach(function(e){
-			num__ = e.dataset.num;
-			sub_.push(num__);
-		})
-		// console.log(sub_)
+	// selectList__item = document.querySelectorAll('#js-selectBox .c-selectList__item');
+	// if(n_ == false) return false;
+	// let sub_ =  [];
+	// if(st == "sub") {
+		// sub_list = document.querySelectorAll('#js-num_list .act');
+		// sub_list.forEach(function(e){
+			// num__ = e.dataset.num;
+			// sub_.push(num__);
+		// })
+	// }
+	// if(document.querySelector('#js-selectBox .act')){
+		// html = `<p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div>`;
+		// document.querySelector('#js-selectBox .act').innerHTML = html;
+	// }else{
+		// html = `<li class="act"><p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div></li>`;
+		// document.querySelector('#js-selectBox').insertAdjacentHTML('beforeend',html);
+	// }
+
+	if(st == "bottom") {
+		
+		let main_ =  [];
+		if(document.querySelectorAll('#js-num_list .main').length>=1){
+			main_list = document.querySelectorAll('#js-num_list .main');
+			main_list.forEach(function(e){
+				num__ = e.dataset.num;
+				main_.push(num__);
+			})
+		}
+		let not_ =  [];
+		if(document.querySelectorAll('#js-num_list .not').length>=1){
+			// console.log(1);
+			not_list = document.querySelectorAll('#js-num_list .not');
+			not_list.forEach(function(e){
+				num__ = e.dataset.num;
+				not_.push(num__);
+			})
+		}
+
+		// html = `<li class="main_not"><p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div></li>`;
+		document.querySelector('#js-selectBox .c-selectList__itemTitle').innerHTML = main_;
+		document.querySelector('#js-selectBox .c-selectList__itemSub').innerHTML = not_;
 	}
-	if(document.querySelector('#js-selectBox .act')){
-		html = `<p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div>`;
-		document.querySelector('#js-selectBox .act').innerHTML = html;
-	}else{
-		html = `<li class="act"><p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div></li>`;
-		document.querySelector('#js-selectBox').insertAdjacentHTML('beforeend',html);
-	}
+	
 	
 	// selectList__item.forEach(){
 		// html = `<li class="p-result__item" id="n${i_id}" >
@@ -54,18 +79,47 @@ function func_bottom_btn(e){
 	// console.log(data_num);
 	
 	if(data_num !== "") {
-		result_box.classList.toggle(`c-${data_num}`);
+		if(e.classList.contains("act")) result_box.classList.toggle(`c-${data_num}`);
 		if(document.querySelector('#js-selectMainAdd').classList.contains('act')||
 			document.querySelector('#js-result').classList.contains(`c-${data_num}--Main`)) document.querySelector('#js-result').classList.toggle(`c-${data_num}--Main`);
 	}
 
-	if(e.classList.contains("act")){
-		e.classList.remove("act");
+	if(e.closest('#js-num_list')){
+
+		if(e.classList.contains("act")){
+			e.classList.remove("act");
+			result_box.classList.remove(`c-${data_num}`);
+			e.classList.add("not");
+		}else if(e.classList.contains("not")){
+			e.classList.remove("not");
+		}else{
+			e.classList.add("act");
+			result_box.classList.add(`c-${data_num}`);
+		}
+		if(document.querySelector("#js-selectMainAdd").classList.contains("act") ){
+			if(e.classList.contains("not")){
+				e.classList.remove("not");
+				e.classList.add("main");
+			}else if(e.classList.contains("main")){
+				e.classList.remove("main");
+			}else{
+				e.classList.add("main");
+			}
+		}
+		if(document.querySelectorAll("#js-num_list .main").length>=1 || document.querySelectorAll("#js-num_list .not").length>=1 ){
+			func_selectList_make("bottom");
+		}
 	}else{
-		e.classList.add("act");
+		if(e.classList.contains("act")){
+			e.classList.remove("act");
+		}else{
+			e.classList.add("act");
+		}
 	}
+
 	result_box.classList.add("c-act");
 	if(document.querySelectorAll("#js-num_list .act").length < 1) result_box.classList.remove("c-act");
+
 
 	//js-selectBox
 	if(document.querySelector('#js-selectMainAdd').classList.contains('act')){
@@ -357,13 +411,14 @@ const btn_resultList_click = function(){
 		});
 	});
 }
+
+//下部選択ボタン
 const btn_numList_click = function(){
 	let c_n = document.querySelectorAll('#js-result .c-n');
 	c_n.forEach(function(i) {
 		i.addEventListener("click", (e)=>{
 			n = i.dataset.num;
 			item_ = document.querySelector(`#js-num_list .c-btn[data-num="${n}"]`);
-			// console.log(item_);
 			func_bottom_btn(item_);
 		});
 	});

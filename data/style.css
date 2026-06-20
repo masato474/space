@@ -299,6 +299,16 @@ main{
 .act{
     opacity: var(--active);
 }
+.c-btn.not{
+    background:#fff;
+    border:1px solid #ddd;
+    color:#7f1dc0;
+}
+.c-btn.main{
+    background:#fff;
+    border:1px solid #eb4b0e;
+    color:#eb4b0e;
+}
 
 
 /**/
@@ -448,9 +458,13 @@ display:block;
     justify-content: censter;
 }
 .c-selectList__itemTitle{
-    margin:right;
+    margin-right:8px;
 }
 .c-selectList__itemSub{
-    display:flex;;
+    display:flex;
     gap:6px;
+}
+
+.main_not .c-selectList__itemSub:before{
+    content:"-";
 }
