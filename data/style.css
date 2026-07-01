@@ -455,14 +455,31 @@ display:block;
 #js-selectBox li{
     display: flex;
     align-items: center;
-    justify-content: censter;
+    justify-content: start;
+    flex-flow: wrap;
 }
 .c-selectList__itemTitle{
     margin-right:8px;
+    display: flex;
+    flex-flow: wrap;
+    gap: 3px;
+}
+.c-selectList__itemTitle i{
+    background: #eee;
+    padding: 0 4px;
+    line-height: 1;
 }
 .c-selectList__itemSub{
     display:flex;
     gap:6px;
+    text-decoration: line-through;
+    flex-flow: wrap;
+}
+
+.c-selectList__itemNormal{
+    display:flex;
+    gap:6px;
+    flex-flow: wrap;
 }
 
 .main_not .c-selectList__itemSub:before{

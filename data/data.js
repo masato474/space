@@ -55,6 +55,17 @@ function func_selectList_make(st = false,n_ = false){
 				not_.push(num__);
 			})
 		}
+		let normal__ =  [];
+		if(document.querySelectorAll('#js-num_list .not').length>=1){
+			// console.log(1);
+			normal__list = document.querySelectorAll('#js-num_list .c-btn');
+			normal__list.forEach(function(e){
+				if(e.classList.contains("main")) return false;
+				if(e.classList.contains("not")) return false;
+				num__ = e.dataset.num;
+				normal__.push(num__);
+			})
+		}
 
 		// html = `<li class="main_not"><p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div></li>`;
 		
@@ -64,10 +75,16 @@ function func_selectList_make(st = false,n_ = false){
 		})
 		not__html = "";
 		not_.forEach(function(e){
-			not__html += `<i>${e}</i>
+			not__html += `<i>${e}</i>`;
+		})
+		normal__html = "";
+		normal__.forEach(function(e){
+			normal__html += `<i>${e}</i>`;
 		})
 		document.querySelector('#js-selectBox .c-selectList__itemTitle').innerHTML = main__html;
 		document.querySelector('#js-selectBox .c-selectList__itemSub').innerHTML = not__html;
+		document.querySelector('#js-selectBox .c-selectList__itemNormal').innerHTML = normal__html;
+		btn_selectList__itemTitle_click();
 	}
 	
 	
@@ -143,6 +160,31 @@ function func_bottom_btn(e){
 		// document.querySelector('#js-selectSubAdd').classList.toggle('act');
 	}
 }
+
+const btn_selectList__itemTitle_click = function(){
+	let list =  document.querySelectorAll('#js-selectBox .c-selectList__itemTitle i');
+	if(list.length<1) return false;
+	list.forEach(function(i) {
+		i.addEventListener("click", ()=>{
+			// if(document.querySelectorAll('#js-selectBox .select_list .act').length >= 1) document.querySelector('#js-selectBox .select_list .act').classList.remove("act");
+			if(document.querySelectorAll('.select_list__item.act').length<1) return false;
+			val = document.querySelector('#js-selectList .select_list__item.act input').value;
+			val = (val == "") ? val = i.textContent : val = val +" "+ i.textContent;
+			document.querySelector('.select_list__item.act input').value = val;
+		});
+	})
+	let list_n =  document.querySelectorAll('#js-selectBox .c-selectList__itemNormal i');
+	if(list_n.length<1) return false;
+	list_n.forEach(function(i) {
+		i.addEventListener("click", ()=>{
+			// if(document.querySelectorAll('#js-selectBox .select_list .act').length >= 1) document.querySelector('#js-selectBox .select_list .act').classList.remove("act");
+			if(document.querySelectorAll('.select_list__item.act').length<1) return false;
+			val = document.querySelector('#js-selectList .select_list__item.act input').value;
+			val = (val == "") ? val = i.textContent : val = val +" "+ i.textContent;
+			document.querySelector('.select_list__item.act input').value = val;
+		});
+	})
+};
 
 const btn_select_list_click = function(){
 	let list =  document.querySelectorAll('#js-selectBox .select_list__item');
