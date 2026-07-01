@@ -468,3 +468,17 @@ display:block;
 .main_not .c-selectList__itemSub:before{
     content:"-";
 }
+.select_list{
+    display:flex;
+    flex-flow: column;
+    gap: 6px;
+}
+.select_list .select_list__item{
+    width: 100%;
+}
+.select_list .select_list__item input{}
+.select_list .select_list__item.act input{
+    background: #fee;
+    border:1px solid #f55;
+    
+}

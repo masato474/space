@@ -50,14 +50,24 @@ function func_selectList_make(st = false,n_ = false){
 			// console.log(1);
 			not_list = document.querySelectorAll('#js-num_list .not');
 			not_list.forEach(function(e){
+				if(e.classList.contains("main")) return false;
 				num__ = e.dataset.num;
 				not_.push(num__);
 			})
 		}
 
 		// html = `<li class="main_not"><p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div></li>`;
-		document.querySelector('#js-selectBox .c-selectList__itemTitle').innerHTML = main_;
-		document.querySelector('#js-selectBox .c-selectList__itemSub').innerHTML = not_;
+		
+		main__html = "";
+		main_.forEach(function(e){
+			main__html += `<i>${e}</i>`;
+		})
+		not__html = "";
+		not_.forEach(function(e){
+			not__html += `<i>${e}</i>
+		})
+		document.querySelector('#js-selectBox .c-selectList__itemTitle').innerHTML = main__html;
+		document.querySelector('#js-selectBox .c-selectList__itemSub').innerHTML = not__html;
 	}
 	
 	
@@ -133,6 +143,17 @@ function func_bottom_btn(e){
 		// document.querySelector('#js-selectSubAdd').classList.toggle('act');
 	}
 }
+
+const btn_select_list_click = function(){
+	let list =  document.querySelectorAll('#js-selectBox .select_list__item');
+	if(list.length<1) return false;
+	list.forEach(function(i) {
+		i.addEventListener("click", ()=>{
+			if(document.querySelectorAll('#js-selectBox .select_list .act').length >= 1) document.querySelector('#js-selectBox .select_list .act').classList.remove("act");
+			i.closest('.select_list__item').classList.toggle('act');
+		});
+	})
+}();
 
 const btn_resultId_click = function(){
 	let list =  document.querySelectorAll('#js-result .p-result__id');
