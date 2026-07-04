@@ -117,8 +117,10 @@ function func_bottom_btn(e){
 			e.classList.remove("act");
 			result_box.classList.remove(`c-${data_num}`);
 			e.classList.add("not");
+			result_box.classList.add(`c-${data_num}--not`);
 		}else if(e.classList.contains("not")){
 			e.classList.remove("not");
+			result_box.classList.remove(`c-${data_num}--not`);
 		}else{
 			e.classList.add("act");
 			result_box.classList.add(`c-${data_num}`);
@@ -126,6 +128,7 @@ function func_bottom_btn(e){
 		if(document.querySelector("#js-selectMainAdd").classList.contains("act") ){
 			if(e.classList.contains("not")){
 				e.classList.remove("not");
+				result_box.classList.remove(`c-${data_num}--not`);
 				e.classList.add("main");
 			}else if(e.classList.contains("main")){
 				e.classList.remove("main");
