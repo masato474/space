@@ -17,23 +17,6 @@ let res_num = {};
 let resB_num = {};
 
 function func_selectList_make(st = false,n_ = false){
-	// selectList__item = document.querySelectorAll('#js-selectBox .c-selectList__item');
-	// if(n_ == false) return false;
-	// let sub_ =  [];
-	// if(st == "sub") {
-		// sub_list = document.querySelectorAll('#js-num_list .act');
-		// sub_list.forEach(function(e){
-			// num__ = e.dataset.num;
-			// sub_.push(num__);
-		// })
-	// }
-	// if(document.querySelector('#js-selectBox .act')){
-		// html = `<p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div>`;
-		// document.querySelector('#js-selectBox .act').innerHTML = html;
-	// }else{
-		// html = `<li class="act"><p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div></li>`;
-		// document.querySelector('#js-selectBox').insertAdjacentHTML('beforeend',html);
-	// }
 
 	if(st == "bottom") {
 		
@@ -45,33 +28,42 @@ function func_selectList_make(st = false,n_ = false){
 				main_.push(num__);
 			})
 		}
+		let fav_ =  [];
+		if(document.querySelectorAll('#js-num_list .fav').length>=1){
+			fav_list = document.querySelectorAll('#js-num_list .fav');
+			fav_list.forEach(function(e){
+				num__ = e.dataset.num;
+				fav_.push(num__);
+			})
+		}
 		let not_ =  [];
 		if(document.querySelectorAll('#js-num_list .not').length>=1){
-			// console.log(1);
 			not_list = document.querySelectorAll('#js-num_list .not');
 			not_list.forEach(function(e){
-				if(e.classList.contains("main")) return false;
+				if(e.classList.contains("main")||e.classList.contains("fav")) return false;
 				num__ = e.dataset.num;
 				not_.push(num__);
 			})
 		}
 		let normal__ =  [];
 		if(document.querySelectorAll('#js-num_list .not').length>=1){
-			// console.log(1);
 			normal__list = document.querySelectorAll('#js-num_list .c-btn');
 			normal__list.forEach(function(e){
-				if(e.classList.contains("main")) return false;
+				if(e.classList.contains("main")||e.classList.contains("fav")) return false;
 				if(e.classList.contains("not")) return false;
 				num__ = e.dataset.num;
 				normal__.push(num__);
 			})
 		}
 
-		// html = `<li class="main_not"><p class="c-selectList__itemTitle">${n_}</p><div class="c-selectList__itemSub">${sub_}</div></li>`;
-		
 		main__html = "";
 		main_.forEach(function(e){
 			main__html += `<i>${e}</i>`;
+		})
+
+		fav__html = "";
+		fav_.forEach(function(e){
+			fav__html += `<i>${e}</i>`;
 		})
 		not__html = "";
 		not_.forEach(function(e){
@@ -82,33 +74,23 @@ function func_selectList_make(st = false,n_ = false){
 			normal__html += `<i>${e}</i>`;
 		})
 		document.querySelector('#js-selectBox .c-selectList__itemTitle').innerHTML = main__html;
+		document.querySelector('#js-selectBox .c-selectList__itemFav').innerHTML = fav__html;
 		document.querySelector('#js-selectBox .c-selectList__itemSub').innerHTML = not__html;
 		document.querySelector('#js-selectBox .c-selectList__itemNormal').innerHTML = normal__html;
 		btn_selectList__itemTitle_click();
 	}
 	
-	
-	// selectList__item.forEach(){
-		// html = `<li class="p-result__item" id="n${i_id}" >
-		// <div class="p-result__id">${i_id}</div>
-		// <div class="p-result__number">
-		// <span class="c-memo"><i class="c-memo_u2${set_stock_flg}"></i><i class="c-memo_b2${set_stock_b_flg}"></i><i class="c-memo_o2"></i></span>
-		// ${item_}
-		// </div>
-		// <div class="p-result__memo">${i_m}</div>
-		// </li>\n${html}`;
-		// }
-	
 }
 function func_bottom_btn(e){
 	let data_num = "";
 	if(e.dataset.num) data_num = e.dataset.num;
-	// console.log(data_num);
 	
 	if(data_num !== "") {
 		if(e.classList.contains("act")) result_box.classList.toggle(`c-${data_num}`);
 		if(document.querySelector('#js-selectMainAdd').classList.contains('act')||
 			document.querySelector('#js-result').classList.contains(`c-${data_num}--Main`)) document.querySelector('#js-result').classList.toggle(`c-${data_num}--Main`);
+		if(document.querySelector('#js-selectFavAdd').classList.contains('act')||
+			document.querySelector('#js-result').classList.contains(`c-${data_num}--Fav`)) document.querySelector('#js-result').classList.toggle(`c-${data_num}--Fav`);
 	}
 
 	if(e.closest('#js-num_list')){
@@ -136,7 +118,21 @@ function func_bottom_btn(e){
 				e.classList.add("main");
 			}
 		}
+		if(document.querySelector("#js-selectFavAdd").classList.contains("act") ){
+			if(e.classList.contains("not")){
+				e.classList.remove("not");
+				result_box.classList.remove(`c-${data_num}--not`);
+				e.classList.add("fav");
+			}else if(e.classList.contains("fav")){
+				e.classList.remove("fav");
+			}else{
+				e.classList.add("fav");
+			}
+		}
 		if(document.querySelectorAll("#js-num_list .main").length>=1 || document.querySelectorAll("#js-num_list .not").length>=1 ){
+			func_selectList_make("bottom");
+		}
+		if(document.querySelectorAll("#js-num_list .fav").length>=1 || document.querySelectorAll("#js-num_list .not").length>=1 ){
 			func_selectList_make("bottom");
 		}
 	}else{
@@ -154,8 +150,11 @@ function func_bottom_btn(e){
 	//js-selectBox
 	if(document.querySelector('#js-selectMainAdd').classList.contains('act')){
 		document.querySelector('#js-selectMainAdd').classList.toggle('act');
-		// console.log('m'+data_num);
 		func_selectList_make('main',data_num);
+	}
+	if(document.querySelector('#js-selectFavAdd').classList.contains('act')){
+		document.querySelector('#js-selectFavAdd').classList.toggle('act');
+		func_selectList_make('fav',data_num);
 	}
 	if(document.querySelector('#js-selectSubAdd').classList.contains('act')){
 		// console.log('s'+data_num);
@@ -169,7 +168,16 @@ const btn_selectList__itemTitle_click = function(){
 	if(list.length<1) return false;
 	list.forEach(function(i) {
 		i.addEventListener("click", ()=>{
-			// if(document.querySelectorAll('#js-selectBox .select_list .act').length >= 1) document.querySelector('#js-selectBox .select_list .act').classList.remove("act");
+			if(document.querySelectorAll('.select_list__item.act').length<1) return false;
+			val = document.querySelector('#js-selectList .select_list__item.act input').value;
+			val = (val == "") ? val = i.textContent : val = val +" "+ i.textContent;
+			document.querySelector('.select_list__item.act input').value = val;
+		});
+	})
+	let list_f =  document.querySelectorAll('#js-selectBox .c-selectList__itemFav i');
+	if(list_f.length<1) return false;
+	list_f.forEach(function(i) {
+		i.addEventListener("click", ()=>{
 			if(document.querySelectorAll('.select_list__item.act').length<1) return false;
 			val = document.querySelector('#js-selectList .select_list__item.act input').value;
 			val = (val == "") ? val = i.textContent : val = val +" "+ i.textContent;
@@ -180,7 +188,6 @@ const btn_selectList__itemTitle_click = function(){
 	if(list_n.length<1) return false;
 	list_n.forEach(function(i) {
 		i.addEventListener("click", ()=>{
-			// if(document.querySelectorAll('#js-selectBox .select_list .act').length >= 1) document.querySelector('#js-selectBox .select_list .act').classList.remove("act");
 			if(document.querySelectorAll('.select_list__item.act').length<1) return false;
 			val = document.querySelector('#js-selectList .select_list__item.act input').value;
 			val = (val == "") ? val = i.textContent : val = val +" "+ i.textContent;
@@ -214,9 +221,6 @@ function getCSV(path){
     var req = new XMLHttpRequest(); // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
     req.open("get", "log/"+path, true); // アクセスするファイルを指定
     req.send(null); // HTTPリクエストの発行
-	// console.log(path);
-    // レスポンスが返ってきたらconvertCSVtoArray()を呼ぶ	
-	// document.querySelector('#js-result').setAttribute('class','p-result__box');
 	result_box.setAttribute('class','p-result__box');
 	let numlist_act =  document.querySelectorAll('#js-num_list .act');
 	if(numlist_act.length>=1) {
@@ -537,7 +541,6 @@ const btn_click = function(btn_class = false){
 			
 		}
 
-						
 		//backnumボタン
 		if(e.hasAttribute("id") == "js-backNum") {
 			if(e.dataset.q) queries = e.dataset.q;
@@ -608,8 +611,6 @@ const reload_json = function(){
 
 // 起動時の処理
 window.addEventListener("load", ()=>{
-	// getUrlQueries();
-	// console.log(queries);
 
 	reload_json();
 	initialize();
